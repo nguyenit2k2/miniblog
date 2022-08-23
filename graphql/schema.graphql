@@ -1,0 +1,36 @@
+type Query {
+    
+    allUsers: [User!]! @all
+    user(id: ID! @eq): User @find
+
+    allPosts: [Post!]! @all
+    post(id: ID! @eq): Post @find
+}
+
+type Mutation {
+
+  updateUser(id: ID!, fullname: String! @eq, email: String! @eq, avatar: String! @eq): User! @update
+  createUser(fullname: String! @eq, email: String! @eq, avatar: String! @eq): User! @create
+
+  updatePost(id:ID!, title: String! @eq, decription: String! @eq, user_id: ID!): Post! @update
+  postPost(title: String! @eq, decription: String! @eq,  user_id: ID!): Post! @create
+  
+}
+
+type User {
+    id: ID! ,
+    fullname: String!,
+    email: String!,
+    avatar: String!,
+    posts: [Post!] @hasMany
+}
+
+type Post {
+  id: ID!,
+  title: String,
+  description: String,
+  user_id: ID!,
+  user: User! @belongsTo(relation: "user")
+}
+
+
